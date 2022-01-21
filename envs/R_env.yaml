@@ -1,0 +1,12 @@
+name: R_env
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - r>=4.1
+  - r-tidyverse
+  - r-gridextra
+  - r-gridbase
+  - r-patchwork
+  - r-ggpubr
+  - r-cowplot

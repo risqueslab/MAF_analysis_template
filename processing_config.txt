@@ -1,0 +1,12 @@
+#The input concatenated MAF file
+concat_maf_file="inputs/example_input.maf"
+#A file containing extra data about samples, with the sample names in a column labeled "Sample" (caps matter)
+extra_data_file="inputs/example_data.tsv"
+#The minimum depth to use in this analysis
+min_depth=300
+# The maximum Mutant Allele Frequency to use in analysis
+MAF_lim=0.3
+#A prefix for any output files created
+out_prefix="outputs/example_output"
+#Comma delimited list of app filters to apply to the MAF file
+filters_to_apply="SNP,masked"

@@ -1,0 +1,4 @@
+Hugo_Symbol	NCBI_Build	Chromosome	Start_Position	Variant_Classification	Variant_Type	Reference_Allele	Tumor_Seq_Allele2	Tumor_Sample_Barcode	HGVSc	HGVSp	HGVSp_Short	Exon_Number	t_depth	t_alt_count	Consequence	Existing_variation	IMPACT	FILTER	MAF	Mutation_type	coding	Age
+ARID1A	GRCh38	chr1	26731048	Intron	SNP	G	TRUE	testSamp1	c.1351-104G>T	NA	NA	NA	942	1	intron_variant	NA	MODIFIER	.	0.0010615711252653928	Intron	non-coding	10
+ARID1A	GRCh38	chr1	26731070	Intron	SNP	C	TRUE	testSamp2	c.1351-82C>T	NA	NA	NA	826	396	intron_variant	rs41303627,COSV61392281	MODIFIER	SNP	0.4794188861985472	Intron	non-coding	20
+ARID1A	GRCh38	chr1	26729701	Silent	SNP	C	TRUE	testSamp3	c.1188C>T	p.Gly396=	p.G396=	2/20	2615	2	synonymous_variant	rs61749356,COSV104536713	LOW	common_variant	7.648183556405354e-4	Silent	coding	30
