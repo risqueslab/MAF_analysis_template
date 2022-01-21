@@ -8,5 +8,5 @@ min_depth=300
 MAF_lim=0.3
 #A prefix for any output files created
 out_prefix="outputs/example_output"
-#Comma delimited list of app filters to apply to the MAF file
+#Comma delimited list of filters to apply to the MAF file
 filters_to_apply="SNP,masked"
