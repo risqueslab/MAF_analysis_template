@@ -18,7 +18,7 @@ FiltersToApply = str_split(inputs$filters_to_apply, pattern = ",")[[1]]
 in_maf_file = inputs$concat_maf_file
 # File translating sample names, with (at minimum) column "Tumor_Sample_Barcode"
 # reflecting the names in the MAF file
-in_sample_renaming = inputs$extra_data_file
+sample_data_file = inputs$extra_data_file
 
 # minimum depth to filter to (not implemented yet)
 min_depth = inputs$min_depth
@@ -41,77 +41,10 @@ MAF_lim = inputs$MAF_lim
 filter_string = do.call(paste, as.list(c(FiltersToApply, sep="|")))
 
 # set up variant classification table
-variant_clasification_table = tibble(Variant_Classification=c("Frame_Shift_Del",
-                                                              "Frame_Shift_Ins",
-                                                              "In_Frame_Del",
-                                                              "In_Frame_Ins",
-                                                              "Missense_Mutation",
-                                                              "Nonsense_Mutation",
-                                                              "Silent",
-                                                              "Splice_Site",
-                                                              "Translation_Start_Site",
-                                                              "Nonstop_Mutation",
-                                                              "3'UTR",
-                                                              "3'Flank",
-                                                              "5'UTR",
-                                                              "5'Flank",
-                                                              "IGR ",
-                                                              "Intron",
-                                                              "RNA",
-                                                              "Targeted_Region",
-                                                              "Indel",
-                                                              "De_novo_Start_InFrame",
-                                                              "De_novo_Start_OutOfFrame",
-                                                              "Splice_Region"),
-                                     Mutation_type=c("Indel",
-                                                     "Indel",
-                                                     "Indel",
-                                                     "Indel",
-                                                     "Missense_Mutation",
-                                                     "Nonsense_Mutation",
-                                                     "Silent",
-                                                     "Splice",
-                                                     "Missense_Mutation",
-                                                     "Missense_Mutation",
-                                                     "UTR",
-                                                     "Intron",
-                                                     "UTR",
-                                                     "Intron",
-                                                     "IGR",
-                                                     "Intron",
-                                                     "RNA",
-                                                     "Targeted_Region",
-                                                     "Indel",
-                                                     "Missense_Mutation",
-                                                     "Missense_Mutation",
-                                                     "Splice"),
-                                     coding = c("coding",
-                                                "coding",
-                                                "coding",
-                                                "coding",
-                                                "coding",
-                                                "coding",
-                                                "coding",
-                                                "coding",
-                                                "coding",
-                                                "coding",
-                                                "non-coding",
-                                                "non-coding",
-                                                "non-coding",
-                                                "non-coding",
-                                                "non-coding",
-                                                "non-coding",
-                                                "non-coding",
-                                                "non-coding",
-                                                "coding",
-                                                "coding",
-                                                "coding",
-                                                "non-coding")
-                                     )
-
+variant_clasification_table = read_delim(inputs$varClassTrans, delim="\t") 
 # Filter
 
-sample_names_file <- read_delim(in_sample_renaming, delim="\t")
+sample_data <- read_delim(sample_data_file, delim="\t")
 
 # colnames(maf_table)
 # Load MAF file
@@ -138,7 +71,7 @@ maf_table <- read_delim(in_maf_file, delim="\t", skip=1) %>%
          ) %>% 
   mutate(MAF=t_alt_count/t_depth) %>% 
   left_join(variant_clasification_table, by=c("Variant_Classification")) %>%
-  left_join(sample_names_file, by=c("Tumor_Sample_Barcode"="Sample")) %>% 
+  left_join(sample_data, by=c("Tumor_Sample_Barcode"="Sample")) %>% 
   mutate(coding2 = if_else(
     Variant_Classification == "Splice_Region", 
     if_else(is.na(Exon_Number), 
@@ -156,6 +89,7 @@ maf_table  %>%
 maf_table %>% 
   filter(!grepl(filter_string, FILTER)) %>% 
   filter(MAF <= MAF_lim) %>% 
+  filter(t_depth >= inputs$min_depth) %>% 
   write_delim(paste(out_prefix,".pre_anal.filt.tsv", sep = ""), 
               delim = "\t")
 
