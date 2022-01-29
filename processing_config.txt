@@ -10,3 +10,13 @@ MAF_lim=0.3
 out_prefix="outputs/example_output"
 #Comma delimited list of filters to apply to the MAF file
 filters_to_apply="SNP,masked"
+# Variant classification Translation
+varClassTrans="inputs/MAF_VCT.tsv"
+
+# Inputs for Seshat processing (TP53 mutations only)
+# Translation table for the Seshat Comment_1_Frequency column
+seshat_com1_translate="inputs/Seshat_Com1_Trans.tsv"
+# Translation table for the Seshat Pathogenicity column
+seshat_path_translate="inputs/Seshat_Path_Trans.tsv"
+# The long form output from Seshat (TP53 mutations only)
+seshat_long_file="inputs/example_seshat_long.tsv"
