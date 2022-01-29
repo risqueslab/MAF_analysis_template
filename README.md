@@ -32,5 +32,6 @@ The required inputs are:
 * A maximum clonality level to use; this can override the *SNP* filter from the Duplex-Seq-Pipeline
 * A prefix for any output files generated; suggested that this start with **outputs/** to place outputs in the outputs directory.  
 * A comma-delimited list of filters to apply (no spaces)
+* A long-form [Seshat](https://p53.fr/tp53-database/seshat) file (for TP53 analysis only)
 
 It is suggested that all input files go in the **inputs** folder, and that their definition in the processing_config.txt file reflect that.  
